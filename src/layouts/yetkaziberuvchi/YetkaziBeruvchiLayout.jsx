@@ -10,14 +10,16 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import routes from 'routes.js';
 
 // Custom Chakra theme
-export default function Dashboard(props) {
+export default function YetkaziBeruvchiLayout(props) {
+  console.log('here');
+
   const { ...rest } = props;
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/admin/full-screen-maps';
+    return window.location.pathname !== '/yetkaziberuvchi/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -90,7 +92,7 @@ export default function Dashboard(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/admin') {
+      if (route.layout === '/yetkaziberuvchi') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -133,7 +135,7 @@ export default function Dashboard(props) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={'Dashboard'}
+                  logoText={'YetkaziBeruvchiLayout'}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
@@ -158,7 +160,9 @@ export default function Dashboard(props) {
 
                   <Route
                     path="/"
-                    element={<Navigate to="/admin/default" replace />}
+                    element={
+                      <Navigate to="/yetkaziberuvchi/new-orders" replace />
+                    }
                   />
                 </Routes>
               </Box>

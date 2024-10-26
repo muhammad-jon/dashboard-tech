@@ -17,6 +17,15 @@ import DataTables from 'views/admin/dataTables';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
+import NewOrders from 'views/yetkaziberuvchi/NewOrders';
+import Balance from 'views/yetkaziberuvchi/Balance';
+import Delevered from 'views/yetkaziberuvchi/Delevered';
+import Checking from 'views/yetkaziberuvchi/Checking';
+import Completed from 'views/yetkaziberuvchi/Completed';
+import Payment from 'views/yetkaziberuvchi/Payment';
+
+const role = JSON.parse(localStorage.getItem('userInfo')).data.employee
+  .jobTitle;
 
 const routesConfig = {
   TAMINOT: [
@@ -66,15 +75,50 @@ const routesConfig = {
   ],
   YETKAZIBERUVCHI: [
     {
-      name: 'Profile',
-      layout: '/supplier',
-      path: '/profile',
+      name: 'NewOrders',
+      layout: '/yetkaziberuvchi',
+      path: '/new-orders',
       icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
-      component: <Profile />,
+      component: <NewOrders />,
+    },
+    {
+      name: 'Delevered',
+      layout: '/yetkaziberuvchi',
+      path: '/delevered',
+      icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+      component: <Delevered />,
+    },
+    {
+      name: 'Checking',
+      layout: '/yetkaziberuvchi',
+      path: '/checking',
+      icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+      component: <Checking />,
+    },
+    {
+      name: 'Completed',
+      layout: '/yetkaziberuvchi',
+      path: '/completed',
+      icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+      component: <Completed />,
+    },
+    {
+      name: 'Balance',
+      layout: '/yetkaziberuvchi',
+      path: '/balance',
+      icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+      component: <Balance />,
+    },
+    {
+      name: 'Payment',
+      layout: '/yetkaziberuvchi',
+      path: '/payment',
+      icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+      component: <Payment />,
     },
   ],
 };
 
-const routes = routesConfig['TAMINOT'];
+const routes = routesConfig[role];
 
 export default routes;
