@@ -7,13 +7,24 @@ import YetkaziBeruvchiLayout from './layouts/yetkaziberuvchi/YetkaziBeruvchiLayo
 import { ChakraProvider } from '@chakra-ui/react';
 import initialTheme from './theme/theme';
 import { useState } from 'react';
+import SignInCentered from 'views/auth/signIn';
 
 export default function Main() {
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo ? userInfo.data.token : null;
-  const role = userInfo.data.employee.jobTitle;
 
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const token = userInfo ? userInfo?.data.token : null;
+  const role = userInfo?.data.employee.jobTitle;
+
+  const navigateTo = (role) => {
+    switch (role) {
+      case 'YETKAZIBERUVCHI':
+        return 'yetkaziberuvchi';
+
+      default:
+        return 'auth';
+    }
+  };
   const router = (role) => {
     switch (role) {
       case 'YETKAZIBERUVCHI':
@@ -49,7 +60,7 @@ export default function Main() {
       default:
         return (
           <Route
-            path="admin/*"
+            path="auth/*"
             element={
               token ? (
                 <AdminLayout theme={currentTheme} setTheme={setCurrentTheme} />
@@ -69,8 +80,9 @@ export default function Main() {
         {router(role)}
         <Route
           path="/*"
-          element={<Navigate to={token ? '/admin' : '/auth'} />}
+          element={<Navigate to={token ? navigateTo(role) : '/auth'} />}
         />
+        <Route path="auth/sign-in" element={<SignInCentered />} />
       </Routes>
     </ChakraProvider>
   );

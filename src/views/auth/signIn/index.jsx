@@ -65,7 +65,7 @@ function SignIn() {
         duration: 1000,
         isClosable: true,
       });
-      navigate('/admin');
+      return navigate('/');
     }
   };
 

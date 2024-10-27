@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_URL } from 'config';
 
 // Async Thunk for login API call
 export const login = createAsyncThunk(
@@ -9,16 +10,13 @@ export const login = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await axios.post(
-        'https://ventum-internship-backend.bis-apps.com/api/accounts/log-in',
-        {
-          login,
-          password,
-          deviceId,
-          token,
-          language,
-        },
-      );
+      const response = await axios.post(BASE_URL + 'accounts/log-in', {
+        login,
+        password,
+        deviceId,
+        token,
+        language,
+      });
       localStorage.setItem('userInfo', JSON.stringify(response.data));
       return response.data;
     } catch (error) {
