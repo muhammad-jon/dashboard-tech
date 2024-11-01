@@ -36,7 +36,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Payment = () => {
+const Checking = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -163,4 +163,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default Checking;

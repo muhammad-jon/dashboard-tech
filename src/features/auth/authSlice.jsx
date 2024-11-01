@@ -1,29 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { BASE_URL } from 'config';
+import { createSlice } from '@reduxjs/toolkit';
+import login from './authThunk';
 
 // Async Thunk for login API call
-export const login = createAsyncThunk(
-  'auth/login',
-  async (
-    { login, password, deviceId, token, language },
-    { rejectWithValue },
-  ) => {
-    try {
-      const response = await axios.post(BASE_URL + 'accounts/log-in', {
-        login,
-        password,
-        deviceId,
-        token,
-        language,
-      });
-      localStorage.setItem('userInfo', JSON.stringify(response.data));
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -58,4 +36,5 @@ const authSlice = createSlice({
 });
 
 export const { logout } = authSlice.actions;
+
 export default authSlice.reducer;

@@ -2,7 +2,18 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 // chakra imports
-import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Flex,
+  HStack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 export function SidebarLinks(props) {
   //   Chakra color mode
@@ -28,24 +39,17 @@ export function SidebarLinks(props) {
     return routes.map((route, index) => {
       if (route.category) {
         return (
-          <>
-            <Text
-              fontSize={'md'}
-              color={activeColor}
-              fontWeight="bold"
-              mx="auto"
-              ps={{
-                sm: '10px',
-                xl: '16px',
-              }}
-              pt="18px"
-              pb="12px"
-              key={index}
-            >
-              {route.name}
-            </Text>
-            {createLinks(route.items)}
-          </>
+          <AccordionItem key={index}>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex="1" textAlign="left">
+                  {route.name}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>{createLinks(route.items)}</AccordionPanel>
+          </AccordionItem>
         );
       } else if (route.layout) {
         return (

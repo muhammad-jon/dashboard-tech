@@ -7,20 +7,24 @@ import YetkaziBeruvchiLayout from './layouts/yetkaziberuvchi/YetkaziBeruvchiLayo
 import { ChakraProvider } from '@chakra-ui/react';
 import initialTheme from './theme/theme';
 import { useState } from 'react';
-import SignInCentered from 'views/auth/signIn';
+import SignInCentered from 'views/auth';
+import CEOLayout from 'layouts/ceo/CEOLayout';
+import { useSelector } from 'react-redux';
+import FinancesLayout from 'layouts/finances/FinancesLayout';
 
 export default function Main() {
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
-
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo ? userInfo?.data.token : null;
-  const role = userInfo?.data.employee.jobTitle;
+  const { token, user } = useSelector((state) => state.auth);
+  const role = user?.jobTitle;
 
   const navigateTo = (role) => {
     switch (role) {
       case 'YETKAZIBERUVCHI':
         return 'yetkaziberuvchi';
-
+      case 'CEO':
+        return 'ceo';
+      case 'MOLIYA':
+        return 'moliya';
       default:
         return 'auth';
     }
@@ -34,6 +38,35 @@ export default function Main() {
             element={
               token ? (
                 <YetkaziBeruvchiLayout
+                  theme={currentTheme}
+                  setTheme={setCurrentTheme}
+                />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'CEO':
+        return (
+          <Route
+            path="ceo/*"
+            element={
+              token ? (
+                <CEOLayout theme={currentTheme} setTheme={setCurrentTheme} />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'MOLIYA':
+        return (
+          <Route
+            path="moliya/*"
+            element={
+              token ? (
+                <FinancesLayout
                   theme={currentTheme}
                   setTheme={setCurrentTheme}
                 />

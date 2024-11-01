@@ -8,10 +8,14 @@ import { RtlProvider } from 'components/rtlProvider/RtlProvider.js';
 import { SidebarContext } from 'contexts/SidebarContext';
 import React, { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import routes from 'routes.js';
+// import routes from 'routes.js';
+import { useSelector } from 'react-redux';
+import routesConfig from 'routes';
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const { user } = useSelector((state) => state.auth);
+  const routes = routesConfig[user?.jobTitle || 'GOST'];
   const { ...rest } = props;
   // states and functions
   const [fixed] = useState(false);

@@ -23,7 +23,7 @@ import illustration from 'assets/img/auth/auth.jpg';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from './authSlice';
+import login from '../../features/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
@@ -31,8 +31,8 @@ function SignIn() {
   const { isLoading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-    login: '',
-    password: '',
+    login: 'supllier',
+    password: '1q2w3e4r',
     deviceId: 'string',
     token: 'string',
     language: 'uz',
@@ -44,6 +44,7 @@ function SignIn() {
   };
 
   const toast = useToast();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginData.login === '' || loginData.password === '') {

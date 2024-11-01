@@ -22,11 +22,17 @@ import React from 'react';
 
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 
-import routes from 'routes';
+// import routes from 'routes';
 import { HSeparator } from 'components/separator/Separator';
 import { GlobeIcon } from 'components/icons/Icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from 'features/auth/authSlice';
+import routesConfig from 'routes';
 export default function HeaderLinks(props) {
+  const { user } = useSelector((state) => state.auth);
+  const routes = routesConfig[user.jobTitle || 'GOST'];
+
   const { secondary } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   // Chakra Color Mode
@@ -43,9 +49,13 @@ export default function HeaderLinks(props) {
 
   const userInfo = JSON.parse(localStorage.getItem('userInfo')).data.employee;
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const Logout = () => {
+    dispatch(logout());
+
     localStorage.removeItem('userInfo');
-    navigate('/auth');
+    return navigate('/auth');
   };
 
   return (

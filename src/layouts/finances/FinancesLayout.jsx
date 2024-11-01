@@ -14,22 +14,20 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
-// import routes from 'routes.js';
-import DeleveredDoc from 'views/yetkaziberuvchi/DeleveredDoc';
-import NewOrderDoc from 'views/yetkaziberuvchi/NewOrderDoc';
-import PaymentDoc from 'views/yetkaziberuvchi/PaymentDoc';
+import ItemDoc from 'views/ceo/ItemDoc';
 
 // Custom Chakra theme
-export default function YetkaziBeruvchiLayout(props) {
+export default function FinancesLayout(props) {
   const { user } = useSelector((state) => state.auth);
   const routes = routesConfig[user?.jobTitle || 'GOST'];
+
   const { ...rest } = props;
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/yetkaziberuvchi/full-screen-maps';
+    return window.location.pathname !== '/ceo/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -102,7 +100,7 @@ export default function YetkaziBeruvchiLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/yetkaziberuvchi') {
+      if (route.layout === '/moliya') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -148,7 +146,7 @@ export default function YetkaziBeruvchiLayout(props) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={'YetkaziBeruvchiLayout'}
+                  logoText={'FinanceLayout'}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}
@@ -173,27 +171,21 @@ export default function YetkaziBeruvchiLayout(props) {
 
                     <Route
                       path="new-orders/neworderdoc"
-                      element={<NewOrderDoc />}
+                      element={<ItemDoc />}
                     />
                     <Route
                       path="delevered/delevereddoc"
-                      element={<DeleveredDoc />}
+                      element={<ItemDoc />}
                     />
-                    <Route path="payment/paymentdoc" element={<PaymentDoc />} />
-                    <Route
-                      path="checking/inchekingdoc"
-                      element={<NewOrderDoc />}
-                    />
+                    <Route path="checking/inchekingdoc" element={<ItemDoc />} />
                     <Route
                       path="completed/completeddoc"
-                      element={<NewOrderDoc />}
+                      element={<ItemDoc />}
                     />
 
                     <Route
                       path="/"
-                      element={
-                        <Navigate to="/yetkaziberuvchi/new-orders" replace />
-                      }
+                      element={<Navigate to="/moliya/orders" replace />}
                     />
                   </Routes>
                 </Box>

@@ -30,13 +30,14 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import fetchPurchaseInvoices from 'features/yetkaziberuvchi/invoiceThunk';
+import fetchCEOOrders from 'features/ceo/ordersThunk';
 import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Payment = () => {
+const NewOrders = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -44,26 +45,26 @@ const Payment = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const purchaseInvoices = useSelector((state) => state.purchaseInvoices);
-  let isLoading = purchaseInvoices.loading;
+  const ceoOrders = useSelector((state) => state.ceoOrders);
+  let isLoading = ceoOrders.loading;
 
-  console.log(purchaseInvoices);
+  console.log(ceoOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPurchaseInvoices({ page, cardName, startDate, endDate }));
-  }, [page, cardName, startDate, endDate]);
+    dispatch(fetchCEOOrders({ page, status: 1 }));
+  }, [page]);
 
   const navigate = useNavigate();
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('paymentdoc');
+    return navigate('neworderdoc');
   }
 
   return (
     <div>
-      <Heading>Purchase invoices</Heading>
+      <Heading>Orders</Heading>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -72,7 +73,7 @@ const Payment = () => {
           <Input
             type="text"
             onChange={(el) => setCardName(el.target.value)}
-            placeholder="Search"
+            placeholder="Search by card name"
           />
         </InputGroup>
         <Input
@@ -128,31 +129,28 @@ const Payment = () => {
           <Table variant="striped" colorScheme="green">
             <Thead>
               <Tr>
+                <Th>Doc num</Th>
+                <Th>Card name</Th>
                 <Th>Doc date</Th>
-                <Th>Cash Sum</Th>
-                <Th>Cash Sum FC</Th>
-                <Th>Doc Currency</Th>
-                <Th>Doc</Th>
+                <Th>Doc due date</Th>
+                <Th>Description</Th>
+                <Th>Doc total</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseInvoices.data &&
-                purchaseInvoices.data.map((invoice, index) => (
+              {ceoOrders.data &&
+                ceoOrders.data.map((order, index) => (
                   <Tr
-                    cursor={'pointer'}
                     key={index}
-                    onClick={() => openDoc(invoice)}
+                    cursor={'pointer'}
+                    onClick={() => openDoc(order)}
                   >
-                    <Td>{formatDate(invoice.docDate)}</Td>
-                    <Td>{invoice.cardCode}</Td>
-
-                    <Td>{invoice.docTotal}</Td>
-                    <Td>{invoice.docCurrency}</Td>
-                    <Td>
-                      <Box onClick={onOpen}>
-                        <EditIcon /> Edit
-                      </Box>
-                    </Td>
+                    <Td>{order.docNum}</Td>
+                    <Td>{order.cardName}</Td>
+                    <Td>{formatDate(order.docDate)}</Td>
+                    <Td>{formatDate(order.docDueDate)}</Td>
+                    <Td>{order.documentLines[0].itemDescription}</Td>
+                    <Td>{order.docTotal}</Td>
                   </Tr>
                 ))}
             </Tbody>
@@ -163,4 +161,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default NewOrders;

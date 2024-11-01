@@ -11,13 +11,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Table,
   TableContainer,
   Tbody,
@@ -26,44 +19,41 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import fetchPurchaseInvoices from 'features/yetkaziberuvchi/invoiceThunk';
+import fetchCeoOrders from 'features/ceo/ordersThunk';
 import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Payment = () => {
+const Checking = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const checkingOrders = useSelector((state) => state.ceoOrders);
+  let isLoading = checkingOrders.loading;
 
-  const purchaseInvoices = useSelector((state) => state.purchaseInvoices);
-  let isLoading = purchaseInvoices.loading;
-
-  console.log(purchaseInvoices);
+  console.log(checkingOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPurchaseInvoices({ page, cardName, startDate, endDate }));
-  }, [page, cardName, startDate, endDate]);
+    dispatch(fetchCeoOrders({ page, status: 3 }));
+  }, [page]);
 
   const navigate = useNavigate();
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('paymentdoc');
+    return navigate('checkingdoc');
   }
 
   return (
     <div>
-      <Heading>Purchase invoices</Heading>
+      <Heading>Delevered</Heading>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -72,7 +62,7 @@ const Payment = () => {
           <Input
             type="text"
             onChange={(el) => setCardName(el.target.value)}
-            placeholder="Search"
+            placeholder="Search by card name"
           />
         </InputGroup>
         <Input
@@ -105,22 +95,6 @@ const Payment = () => {
         </Button>
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Lorem, ipsum.</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
       {isLoading ? (
         <Loading />
       ) : (
@@ -128,31 +102,28 @@ const Payment = () => {
           <Table variant="striped" colorScheme="green">
             <Thead>
               <Tr>
+                <Th>Doc num</Th>
+                <Th>Card name</Th>
                 <Th>Doc date</Th>
-                <Th>Cash Sum</Th>
-                <Th>Cash Sum FC</Th>
-                <Th>Doc Currency</Th>
-                <Th>Doc</Th>
+                <Th>Doc due date</Th>
+                <Th>Description</Th>
+                <Th>Doc total</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseInvoices.data &&
-                purchaseInvoices.data.map((invoice, index) => (
+              {checkingOrders.data &&
+                checkingOrders.data.map((order, index) => (
                   <Tr
-                    cursor={'pointer'}
                     key={index}
-                    onClick={() => openDoc(invoice)}
+                    cursor={'pointer'}
+                    onClick={() => openDoc(order)}
                   >
-                    <Td>{formatDate(invoice.docDate)}</Td>
-                    <Td>{invoice.cardCode}</Td>
-
-                    <Td>{invoice.docTotal}</Td>
-                    <Td>{invoice.docCurrency}</Td>
-                    <Td>
-                      <Box onClick={onOpen}>
-                        <EditIcon /> Edit
-                      </Box>
-                    </Td>
+                    <Td>{order.docNum}</Td>
+                    <Td>{order.cardName}</Td>
+                    <Td>{formatDate(order.docDate)}</Td>
+                    <Td>{formatDate(order.docDueDate)}</Td>
+                    <Td>{order.documentLines[0].itemDescription}</Td>
+                    <Td>{order.docTotal}</Td>
                   </Tr>
                 ))}
             </Tbody>
@@ -163,4 +134,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default Checking;

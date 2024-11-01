@@ -6,11 +6,15 @@ import Navbar from 'components/navbar/NavbarAdmin.js';
 import Sidebar from 'components/sidebar/Sidebar.js';
 import { SidebarContext } from 'contexts/SidebarContext';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import routes from 'routes.js';
+import routesConfig from 'routes';
 
 // Custom Chakra theme
 export default function Dashboard(props) {
+  const { user } = useSelector((state) => state.auth);
+  const routes = routesConfig[user?.jobTitle || 'GOST'];
+
   const { ...rest } = props;
   // states and functions
   const [fixed] = useState(false);
@@ -150,8 +154,8 @@ export default function Dashboard(props) {
                 pe="20px"
                 minH="100vh"
                 pt="50px"
-                mt={20}
-                bg={'green'}
+                mt={'100px'}
+                bg={'white'}
               >
                 <Routes>
                   {getRoutes(routes)}

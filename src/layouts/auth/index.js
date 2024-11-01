@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import routes from 'routes.js';
+// import routes from 'routes.js';
 
 // Chakra imports
 import { Box, useColorModeValue } from '@chakra-ui/react';
 
 // Layout components
 import { SidebarContext } from 'contexts/SidebarContext';
+import { useSelector } from 'react-redux';
+import routesConfig from 'routes';
 
 // Custom Chakra theme
 export default function Auth() {
+  const { user } = useSelector((state) => state.auth);
+  const routes = routesConfig[user?.jobTitle || 'GOST'];
+
   // states and functions
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
