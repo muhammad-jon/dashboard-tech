@@ -12,6 +12,9 @@ import CEOordersReducer from '../features/ceo/ordersSlice';
 //finance
 import financeOrdersReducer from '../features/finance/ordersSlice';
 
+//taminot
+import taminotItemsReducer from '../features/taminot/itemsSlice';
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -20,5 +23,6 @@ export const store = configureStore({
     purchaseOrders: purchaseOrdersReducer,
     ceoOrders: CEOordersReducer,
     financeOrders: financeOrdersReducer,
+    taminotItems: taminotItemsReducer,
   },
 });

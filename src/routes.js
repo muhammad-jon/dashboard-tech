@@ -53,6 +53,10 @@ import FinanceShipped from 'views/finances/Shipped';
 import { IoCheckbox, IoList } from 'react-icons/io5';
 import { RiBox1Fill } from 'react-icons/ri';
 import { CheckIcon } from '@chakra-ui/icons';
+import Items from 'views/taminot/Items';
+import Orders from 'views/taminot/Orders';
+import DeleveredTaminot from 'views/taminot/Delevered';
+import InCheckingTaminot from 'views/taminot/InChecking';
 
 const routesConfig = {
   ADMIN: [
@@ -278,7 +282,7 @@ const routesConfig = {
           layout: '/taminot',
           path: '/items',
           icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
-          component: <FinanceNewOrders />,
+          component: <Items />,
         },
         {
           name: 'Harid buyurtmalar',
@@ -287,7 +291,7 @@ const routesConfig = {
           icon: (
             <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
           ),
-          component: <FinanceNewOrders />,
+          component: <Orders />,
         },
       ],
     },
@@ -302,7 +306,7 @@ const routesConfig = {
           icon: (
             <Icon as={MdFireTruck} width="20px" height="20px" color="inherit" />
           ),
-          component: <FinanceNewOrders />,
+          component: <DeleveredTaminot />,
         },
         {
           name: 'Tekshiruvdagilar',
@@ -311,7 +315,7 @@ const routesConfig = {
           icon: (
             <Icon as={MdSearch} width="20px" height="20px" color="inherit" />
           ),
-          component: <FinanceNewOrders />,
+          component: <InCheckingTaminot />,
         },
         {
           name: 'Qabul qilinganlar',
@@ -333,6 +337,39 @@ const routesConfig = {
           path: '/ended',
           icon: <Icon as={MdDone} width="20px" height="20px" color="inherit" />,
           component: <FinanceNewOrders />,
+        },
+      ],
+    },
+  ],
+  OMBOR_MUDIRI: [
+    {
+      category: 'Zakupka',
+      name: 'Zakupka',
+      items: [
+        {
+          name: 'Tekshiruvdan otganlar ',
+          layout: '/ombormudiri',
+          path: '/passed',
+          icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+          component: <Items />,
+        },
+        {
+          name: 'Yuklanganlar',
+          layout: '/ombormudiri',
+          path: '/packed',
+          icon: (
+            <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
+          ),
+          component: <Orders />,
+        },
+        {
+          name: 'Yakunlanganlar',
+          layout: '/ombormudiri',
+          path: '/ended',
+          icon: (
+            <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
+          ),
+          component: <Orders />,
         },
       ],
     },

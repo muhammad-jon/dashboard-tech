@@ -23,7 +23,7 @@ import NewOrderDoc from 'views/taminot/NewOrderDoc';
 import OrdersDoc from 'views/taminot/OrdersDoc';
 
 // Custom Chakra theme
-export default function TaminotLayout(props) {
+export default function OmborMudiriLayout(props) {
   const { user } = useSelector((state) => state.auth);
   const routes = routesConfig[user?.jobTitle || 'GOST'];
 
@@ -33,7 +33,7 @@ export default function TaminotLayout(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/ceo/full-screen-maps';
+    return window.location.pathname !== '/ombormudiri/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -106,7 +106,7 @@ export default function TaminotLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/taminot') {
+      if (route.layout === '/ombormudiri') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -183,7 +183,7 @@ export default function TaminotLayout(props) {
 
                     <Route
                       path="/"
-                      element={<Navigate to="/taminot/orders" replace />}
+                      element={<Navigate to="/ombormudiri/orders" replace />}
                     />
                   </Routes>
                 </Box>

@@ -12,6 +12,7 @@ import CEOLayout from 'layouts/ceo/CEOLayout';
 import { useSelector } from 'react-redux';
 import FinancesLayout from 'layouts/finances/FinancesLayout';
 import TaminotLayout from 'layouts/taminot/TaminotLayout';
+import OmborMudiriLayout from 'layouts/ombormudiri/OmborMudiriLayout';
 
 export default function Main() {
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
@@ -28,6 +29,8 @@ export default function Main() {
         return 'moliya';
       case 'TAMINOT':
         return 'taminot';
+      case 'OMBOR_MUDIRI':
+        return 'ombormudiri';
       default:
         return 'auth';
     }
@@ -86,6 +89,22 @@ export default function Main() {
             element={
               token ? (
                 <TaminotLayout
+                  theme={currentTheme}
+                  setTheme={setCurrentTheme}
+                />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'OMBOR_MUDIRI':
+        return (
+          <Route
+            path="ombormudiri/*"
+            element={
+              token ? (
+                <OmborMudiriLayout
                   theme={currentTheme}
                   setTheme={setCurrentTheme}
                 />
