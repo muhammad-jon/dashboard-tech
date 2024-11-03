@@ -11,6 +11,7 @@ import SignInCentered from 'views/auth';
 import CEOLayout from 'layouts/ceo/CEOLayout';
 import { useSelector } from 'react-redux';
 import FinancesLayout from 'layouts/finances/FinancesLayout';
+import TaminotLayout from 'layouts/taminot/TaminotLayout';
 
 export default function Main() {
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
@@ -25,6 +26,8 @@ export default function Main() {
         return 'ceo';
       case 'MOLIYA':
         return 'moliya';
+      case 'TAMINOT':
+        return 'taminot';
       default:
         return 'auth';
     }
@@ -67,6 +70,22 @@ export default function Main() {
             element={
               token ? (
                 <FinancesLayout
+                  theme={currentTheme}
+                  setTheme={setCurrentTheme}
+                />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'TAMINOT':
+        return (
+          <Route
+            path="taminot/*"
+            element={
+              token ? (
+                <TaminotLayout
                   theme={currentTheme}
                   setTheme={setCurrentTheme}
                 />

@@ -18,7 +18,7 @@ import ItemDoc from 'views/ceo/ItemDoc';
 import CompletedDoc from 'views/finances/CompletedDoc';
 
 // Custom Chakra theme
-export default function FinancesLayout(props) {
+export default function TaminotLayout(props) {
   const { user } = useSelector((state) => state.auth);
   const routes = routesConfig[user?.jobTitle || 'GOST'];
 
@@ -101,7 +101,7 @@ export default function FinancesLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/moliya') {
+      if (route.layout === '/taminot') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -185,7 +185,7 @@ export default function FinancesLayout(props) {
 
                     <Route
                       path="/"
-                      element={<Navigate to="/moliya/orders" replace />}
+                      element={<Navigate to="/taminot/orders" replace />}
                     />
                   </Routes>
                 </Box>

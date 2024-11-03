@@ -1,9 +1,4 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  EditIcon,
-  Search2Icon,
-} from '@chakra-ui/icons';
+import { ArrowLeftIcon, ArrowRightIcon, Search2Icon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -11,13 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Table,
   TableContainer,
   Tbody,
@@ -26,13 +14,11 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import fetchCEOOrders from 'features/ceo/ordersThunk';
+import fetchFinanceOrders from 'features/finance/ordersThunk';
 import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -43,23 +29,21 @@ const NewOrders = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const financeOrders = useSelector((state) => state.financeOrders);
+  let isLoading = financeOrders.loading;
 
-  const ceoOrders = useSelector((state) => state.ceoOrders);
-  let isLoading = ceoOrders.loading;
-
-  console.log(ceoOrders);
+  console.log(financeOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCEOOrders({ page, status: 1 }));
+    dispatch(fetchFinanceOrders({ page, status: 1 }));
   }, [page]);
 
   const navigate = useNavigate();
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('neworderdoc');
+    return navigate('orderdoc');
   }
 
   return (
@@ -106,22 +90,6 @@ const NewOrders = () => {
         </Button>
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Lorem, ipsum.</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
       {isLoading ? (
         <Loading />
       ) : (
@@ -138,8 +106,8 @@ const NewOrders = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {ceoOrders.data &&
-                ceoOrders.data.map((order, index) => (
+              {financeOrders.data &&
+                financeOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}

@@ -1,9 +1,4 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  EditIcon,
-  Search2Icon,
-} from '@chakra-ui/icons';
+import { ArrowLeftIcon, ArrowRightIcon, Search2Icon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -11,13 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Table,
   TableContainer,
   Tbody,
@@ -26,42 +14,41 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import fetchCeoOrders from 'features/ceo/ordersThunk';
+import fetchFinanceOrders from 'features/finance/ordersThunk';
 import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Delevered = () => {
+const Verified = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const deleveredOrders = useSelector((state) => state.ceoOrders);
-  let isLoading = deleveredOrders.loading;
+  const financeOrders = useSelector((state) => state.financeOrders);
+  let isLoading = financeOrders.loading;
 
-  console.log(deleveredOrders);
+  console.log(financeOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCeoOrders({ page, status: 2 }));
+    dispatch(fetchFinanceOrders({ page, status: 5 }));
   }, [page]);
 
   const navigate = useNavigate();
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('delevereddoc');
+    return navigate('verifieddoc');
   }
 
   return (
     <div>
-      <Heading>Delevered</Heading>
+      <Heading>Verified</Heading>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -119,8 +106,8 @@ const Delevered = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {deleveredOrders.data &&
-                deleveredOrders.data.map((order, index) => (
+              {financeOrders.data &&
+                financeOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}
@@ -142,4 +129,4 @@ const Delevered = () => {
   );
 };
 
-export default Delevered;
+export default Verified;

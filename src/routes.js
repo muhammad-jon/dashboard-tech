@@ -13,6 +13,9 @@ import {
   MdList,
   MdFireTruck,
   MdShoppingBag,
+  MdBackpack,
+  MdSearch,
+  MdDoorSliding,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -41,8 +44,10 @@ import FinanceNewOrders from 'views/finances/NewOrders';
 import FinanceDelevered from 'views/finances/Delevered';
 import FinanceCompleted from 'views/finances/Completed';
 import FinanceChecking from 'views/finances/Checking';
-import FinancePassed from 'views/finances/Passed';
+import FinanceVerified from 'views/finances/Verified';
 import FinanceShipped from 'views/finances/Shipped';
+
+// taminot imports
 
 // React Imports
 import { IoCheckbox, IoList } from 'react-icons/io5';
@@ -50,7 +55,7 @@ import { RiBox1Fill } from 'react-icons/ri';
 import { CheckIcon } from '@chakra-ui/icons';
 
 const routesConfig = {
-  TAMINOT: [
+  ADMIN: [
     {
       name: 'Main Dashboard',
       layout: '/admin',
@@ -88,7 +93,7 @@ const routesConfig = {
       component: <Profile />,
     },
     {
-      name: 'Sign In',
+      name: 'Login another role',
       layout: '/auth',
       path: '/sign-in',
       icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
@@ -235,9 +240,9 @@ const routesConfig = {
         {
           name: 'Proshel proverku',
           layout: '/moliya',
-          path: '/passed',
+          path: '/verified',
           icon: <Icon as={MdDone} width="20px" height="20px" color="inherit" />,
-          component: <FinancePassed />,
+          component: <FinanceVerified />,
         },
         {
           name: 'Otgrujeno',
@@ -263,7 +268,75 @@ const routesConfig = {
       ],
     },
   ],
-
+  TAMINOT: [
+    {
+      category: 'Tovarlar',
+      name: 'Tovarlar',
+      items: [
+        {
+          name: 'Tovarlar ',
+          layout: '/taminot',
+          path: '/items',
+          icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+          component: <FinanceNewOrders />,
+        },
+        {
+          name: 'Harid buyurtmalar',
+          layout: '/taminot',
+          path: '/orders',
+          icon: (
+            <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
+          ),
+          component: <FinanceNewOrders />,
+        },
+      ],
+    },
+    {
+      category: 'Xaridlar',
+      name: 'Xaridlar',
+      items: [
+        {
+          name: 'Yetib kelganlar',
+          layout: '/taminot',
+          path: '/delevered',
+          icon: (
+            <Icon as={MdFireTruck} width="20px" height="20px" color="inherit" />
+          ),
+          component: <FinanceNewOrders />,
+        },
+        {
+          name: 'Tekshiruvdagilar',
+          layout: '/taminot',
+          path: '/checking',
+          icon: (
+            <Icon as={MdSearch} width="20px" height="20px" color="inherit" />
+          ),
+          component: <FinanceNewOrders />,
+        },
+        {
+          name: 'Qabul qilinganlar',
+          layout: '/taminot',
+          path: '/got',
+          icon: (
+            <Icon
+              as={MdDoorSliding}
+              width="20px"
+              height="20px"
+              color="inherit"
+            />
+          ),
+          component: <FinanceNewOrders />,
+        },
+        {
+          name: 'Tugallanganlar',
+          layout: '/taminot',
+          path: '/ended',
+          icon: <Icon as={MdDone} width="20px" height="20px" color="inherit" />,
+          component: <FinanceNewOrders />,
+        },
+      ],
+    },
+  ],
   GOST: [],
 };
 

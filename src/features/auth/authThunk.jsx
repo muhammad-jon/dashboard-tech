@@ -16,6 +16,10 @@ const login = createAsyncThunk(
         token,
         language,
       });
+
+      localStorage.setItem('token', response.data.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.data.employee));
+
       localStorage.setItem('userInfo', JSON.stringify(response.data));
       return response.data;
     } catch (error) {

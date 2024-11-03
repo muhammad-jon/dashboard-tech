@@ -15,19 +15,19 @@ const fetchFinanceOrders = createAsyncThunk(
         url += `finances/new/pagination/${arg.page}`;
         break;
       case 2:
-        url += `finances/completed/pagination/${arg.page}`;
-        break;
-      case 3:
         url += `finances/delivered/pagination/${arg.page}`;
         break;
-      case 4:
+      case 3:
         url += `finances/under-review/pagination/${arg.page}`;
         break;
-      case 5:
+      case 4:
         url += `finances/verified/pagination/${arg.page}`;
         break;
-      case 6:
+      case 5:
         url += `finances/shipped/pagination/${arg.page}`;
+        break;
+      case 6:
+        url += `finances/completed/pagination/${arg.page}`;
         break;
       default:
         url += `finances/new/pagination/${arg.page}`;
