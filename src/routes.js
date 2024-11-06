@@ -49,6 +49,12 @@ import FinanceShipped from 'views/finances/Shipped';
 
 // taminot imports
 
+//warehousemanager imports
+import WarehouseManagerPurchaseOrders from 'views/warehousemanager/PurchaseOrders';
+
+// laborant imports
+import LaborantDelevered from 'views/laborant/Delevered';
+
 // React Imports
 import { IoCheckbox, IoList } from 'react-icons/io5';
 import { RiBox1Fill } from 'react-icons/ri';
@@ -57,6 +63,9 @@ import Items from 'views/taminot/Items';
 import Orders from 'views/taminot/Orders';
 import DeleveredTaminot from 'views/taminot/Delevered';
 import InCheckingTaminot from 'views/taminot/InChecking';
+import DeleveryOrders from 'views/warehousemanager/DeleveryOrders';
+import CompletedOrders from 'views/warehousemanager/CompletedOrders';
+import Checking from 'views/laborant/Checking';
 
 const routesConfig = {
   ADMIN: [
@@ -351,29 +360,52 @@ const routesConfig = {
           layout: '/ombormudiri',
           path: '/passed',
           icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
-          component: <Items />,
+          component: <WarehouseManagerPurchaseOrders />,
         },
         {
           name: 'Yuklanganlar',
           layout: '/ombormudiri',
           path: '/packed',
           icon: (
-            <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
+            <Icon as={MdFireTruck} width="20px" height="20px" color="inherit" />
           ),
-          component: <Orders />,
+          component: <DeleveryOrders />,
         },
         {
           name: 'Yakunlanganlar',
           layout: '/ombormudiri',
           path: '/ended',
-          icon: (
-            <Icon as={MdBackpack} width="20px" height="20px" color="inherit" />
-          ),
-          component: <Orders />,
+          icon: <Icon as={MdDone} width="20px" height="20px" color="inherit" />,
+          component: <CompletedOrders />,
         },
       ],
     },
   ],
+  LABORANT: [
+    {
+      category: 'Zakupka',
+      name: 'Zakupka',
+      items: [
+        {
+          name: 'Delevered',
+          layout: '/laborant',
+          path: '/delevered',
+          icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+          component: <LaborantDelevered />,
+        },
+        {
+          name: 'Checking',
+          layout: '/laborant',
+          path: '/checking',
+          icon: (
+            <Icon as={MdFireTruck} width="20px" height="20px" color="inherit" />
+          ),
+          component: <Checking />,
+        },
+      ],
+    },
+  ],
+  BOSHLIQ_LABORANT: [],
   GOST: [],
 };
 

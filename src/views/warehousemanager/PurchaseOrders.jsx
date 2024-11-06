@@ -30,13 +30,13 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
-import fetchPurchaseOrders from 'features/yetkaziberuvchi/ordersThunk';
+import { setOrder } from 'features/warehousemanager/ordersSlice';
+import warehouseManagerOrders from 'features/warehousemanager/ordersThunk';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const PurchaseOrders = () => {
+const NewOrders = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -44,15 +44,15 @@ const PurchaseOrders = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const purchaseOrders = useSelector((state) => state.purchaseOrders);
-  let isLoading = purchaseOrders.loading;
+  const warehouseOrders = useSelector((state) => state.warehouseOrders);
+  let isLoading = warehouseOrders.loading;
 
-  console.log(purchaseOrders);
+  console.log(warehouseOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      fetchPurchaseOrders({ page, cardName, startDate, endDate, status: 1 }),
+      warehouseManagerOrders({ page, cardName, startDate, endDate, status: 1 }),
     );
   }, [page, cardName, startDate, endDate]);
 
@@ -60,7 +60,7 @@ const PurchaseOrders = () => {
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('neworderdoc');
+    return navigate('doc');
   }
 
   return (
@@ -140,8 +140,8 @@ const PurchaseOrders = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseOrders.data &&
-                purchaseOrders.data.map((order, index) => (
+              {warehouseOrders.data &&
+                warehouseOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}
@@ -168,4 +168,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default NewOrders;

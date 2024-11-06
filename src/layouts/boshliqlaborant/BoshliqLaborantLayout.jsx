@@ -19,7 +19,7 @@ import PurchaseOrdersDoc from 'views/warehousemanager/PurchaseOrdersDoc';
 import OrderDoc from 'views/warehousemanager/OrderDoc';
 
 // Custom Chakra theme
-export default function OmborMudiriLayout(props) {
+export default function BoshliqLaborantLayout(props) {
   const { user } = useSelector((state) => state.auth);
   const routes = routesConfig[user?.jobTitle || 'GOST'];
 
@@ -29,7 +29,7 @@ export default function OmborMudiriLayout(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/ombormudiri/full-screen-maps';
+    return window.location.pathname !== '/boshliqlaborant/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -102,7 +102,7 @@ export default function OmborMudiriLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/ombormudiri') {
+      if (route.layout === '/boshliqlaborant') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -177,7 +177,9 @@ export default function OmborMudiriLayout(props) {
 
                     <Route
                       path="/"
-                      element={<Navigate to="/ombormudiri/passed" replace />}
+                      element={
+                        <Navigate to="/boshliqlaborant/passed" replace />
+                      }
                     />
                   </Routes>
                 </Box>

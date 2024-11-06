@@ -15,6 +15,15 @@ import financeOrdersReducer from '../features/finance/ordersSlice';
 //taminot
 import taminotItemsReducer from '../features/taminot/itemsSlice';
 
+//warehouse manager
+import warehouseOrdersReducer from '../features/warehousemanager/ordersSlice';
+
+// laborant
+import laborantOrdersReducer from '../features/laborant/ordersSlice';
+
+// main laborant
+import mainLaborantOrdersReducer from '../features/mainlaborant/ordersSlice';
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -24,5 +33,8 @@ export const store = configureStore({
     ceoOrders: CEOordersReducer,
     financeOrders: financeOrdersReducer,
     taminotItems: taminotItemsReducer,
+    warehouseOrders: warehouseOrdersReducer,
+    laborantOrders: laborantOrdersReducer,
+    mainLaborantOrders: mainLaborantOrdersReducer,
   },
 });

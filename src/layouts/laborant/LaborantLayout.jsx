@@ -14,12 +14,13 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
+import CheckingDoc from 'views/laborant/CheckingDoc';
+import DeleveredDoc from 'views/laborant/DeleverdDoc';
 
-import PurchaseOrdersDoc from 'views/warehousemanager/PurchaseOrdersDoc';
 import OrderDoc from 'views/warehousemanager/OrderDoc';
 
 // Custom Chakra theme
-export default function OmborMudiriLayout(props) {
+export default function LaborantLayout(props) {
   const { user } = useSelector((state) => state.auth);
   const routes = routesConfig[user?.jobTitle || 'GOST'];
 
@@ -29,7 +30,7 @@ export default function OmborMudiriLayout(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/ombormudiri/full-screen-maps';
+    return window.location.pathname !== '/laborant/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -102,7 +103,7 @@ export default function OmborMudiriLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/ombormudiri') {
+      if (route.layout === '/laborant') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -171,13 +172,15 @@ export default function OmborMudiriLayout(props) {
                   <Routes>
                     {getRoutes(routes)}
 
-                    <Route path="passed/doc" element={<PurchaseOrdersDoc />} />
-                    <Route path="packed/doc" element={<OrderDoc />} />
-                    <Route path="ended/doc" element={<OrderDoc />} />
+                    <Route path="delevered/doc" element={<DeleveredDoc />} />
+                    <Route
+                      path="checking/doc/:status"
+                      element={<CheckingDoc />}
+                    />
 
                     <Route
                       path="/"
-                      element={<Navigate to="/ombormudiri/passed" replace />}
+                      element={<Navigate to="/laborant/passed" replace />}
                     />
                   </Routes>
                 </Box>

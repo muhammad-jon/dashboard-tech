@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux';
 import FinancesLayout from 'layouts/finances/FinancesLayout';
 import TaminotLayout from 'layouts/taminot/TaminotLayout';
 import OmborMudiriLayout from 'layouts/ombormudiri/OmborMudiriLayout';
+import LaborantLayout from 'layouts/laborant/LaborantLayout';
+import BoshliqLaborantLayout from 'layouts/boshliqlaborant/BoshliqLaborantLayout';
 
 export default function Main() {
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
@@ -31,6 +33,10 @@ export default function Main() {
         return 'taminot';
       case 'OMBOR_MUDIRI':
         return 'ombormudiri';
+      case 'LABORANT':
+        return 'laborant';
+      case 'BOSHLIQ_LABORANT':
+        return 'boshliqlaborant';
       default:
         return 'auth';
     }
@@ -105,6 +111,38 @@ export default function Main() {
             element={
               token ? (
                 <OmborMudiriLayout
+                  theme={currentTheme}
+                  setTheme={setCurrentTheme}
+                />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'LABORANT':
+        return (
+          <Route
+            path="laborant/*"
+            element={
+              token ? (
+                <LaborantLayout
+                  theme={currentTheme}
+                  setTheme={setCurrentTheme}
+                />
+              ) : (
+                <Navigate to="/auth" />
+              )
+            }
+          />
+        );
+      case 'BOSHLIQ_LABORANT':
+        return (
+          <Route
+            path="boshliqlaborant/*"
+            element={
+              token ? (
+                <BoshliqLaborantLayout
                   theme={currentTheme}
                   setTheme={setCurrentTheme}
                 />

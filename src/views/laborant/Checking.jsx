@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Table,
   TableContainer,
   Tbody,
@@ -30,42 +31,61 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
-import fetchPurchaseOrders from 'features/yetkaziberuvchi/ordersThunk';
+import { setOrder } from 'features/laborant/ordersSlice';
+import getLaborantOrders from 'features/laborant/laborantOrdersThunk';
 import React, { useEffect, useState } from 'react';
+import { MdArrowDropDown } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const PurchaseOrders = () => {
+const Checking = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(3);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const purchaseOrders = useSelector((state) => state.purchaseOrders);
-  let isLoading = purchaseOrders.loading;
+  const laborantOrders = useSelector((state) => state.laborantOrders);
+  let isLoading = laborantOrders.loading;
 
-  console.log(purchaseOrders);
+  console.log(laborantOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(
-      fetchPurchaseOrders({ page, cardName, startDate, endDate, status: 1 }),
-    );
-  }, [page, cardName, startDate, endDate]);
+    dispatch(getLaborantOrders({ page, cardName, startDate, endDate, status }));
+  }, [page, cardName, startDate, endDate, status]);
 
   const navigate = useNavigate();
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('neworderdoc');
+    return navigate('doc/' + status);
   }
 
   return (
     <div>
-      <Heading>New orders</Heading>
+      <Heading>Tekshiruvdagilar</Heading>
+      <Box mt={5}>
+        <Select
+          bg={'blue.600'}
+          color={'white'}
+          icon={<MdArrowDropDown />}
+          onChange={(e) => {
+            console.log(e.target.value);
+
+            setStatus(e.target.value);
+          }}
+          defaultValue={1}
+          placeholder="Select purchase status"
+        >
+          <option value={3}>V protsesse</option>
+          <option value={7}>Preproverka</option>
+          <option value={5}>Ne proshel proverku</option>
+          <option value={6}>Proshel proverku</option>
+        </Select>
+      </Box>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -140,8 +160,8 @@ const PurchaseOrders = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseOrders.data &&
-                purchaseOrders.data.map((order, index) => (
+              {laborantOrders.data &&
+                laborantOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}
@@ -168,4 +188,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default Checking;

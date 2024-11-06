@@ -1,8 +1,8 @@
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  EditIcon,
   Search2Icon,
+  TimeIcon,
 } from '@chakra-ui/icons';
 import {
   Box,
@@ -11,13 +11,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Table,
   TableContainer,
   Tbody,
@@ -26,33 +19,30 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
-import fetchPurchaseOrders from 'features/yetkaziberuvchi/ordersThunk';
+import { setOrder } from 'features/laborant/ordersSlice';
+import getMainLaborantOrders from 'features/mainlaborant/mainLaborantOrdersThunk';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const PurchaseOrders = () => {
+const Delevered = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const laborantOrders = useSelector((state) => state.laborantOrders);
+  let isLoading = laborantOrders.loading;
 
-  const purchaseOrders = useSelector((state) => state.purchaseOrders);
-  let isLoading = purchaseOrders.loading;
-
-  console.log(purchaseOrders);
+  console.log(laborantOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      fetchPurchaseOrders({ page, cardName, startDate, endDate, status: 1 }),
+      getMainLaborantOrders({ page, cardName, startDate, endDate, status: 2 }),
     );
   }, [page, cardName, startDate, endDate]);
 
@@ -60,12 +50,12 @@ const PurchaseOrders = () => {
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('neworderdoc');
+    return navigate('doc');
   }
 
   return (
     <div>
-      <Heading>New orders</Heading>
+      <Heading>Delevered</Heading>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -107,22 +97,6 @@ const PurchaseOrders = () => {
         </Button>
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>Lorem, ipsum.</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
       {isLoading ? (
         <Loading />
       ) : (
@@ -135,13 +109,12 @@ const PurchaseOrders = () => {
                 <Th>Doc date</Th>
                 <Th>Doc due date</Th>
                 <Th>Description</Th>
-                <Th>Doc total</Th>
-                <Th>action</Th>
+                <Th>Timer</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseOrders.data &&
-                purchaseOrders.data.map((order, index) => (
+              {laborantOrders.data &&
+                laborantOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}
@@ -152,12 +125,7 @@ const PurchaseOrders = () => {
                     <Td>{formatDate(order.docDate)}</Td>
                     <Td>{formatDate(order.docDueDate)}</Td>
                     <Td>{order.documentLines[0].itemDescription}</Td>
-                    <Td>{order.docTotal}</Td>
-                    <Td>
-                      <Box onClick={onOpen}>
-                        <EditIcon /> Edit
-                      </Box>
-                    </Td>
+                    <Td>{order.timer1}</Td>
                   </Tr>
                 ))}
             </Tbody>
@@ -168,4 +136,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default Delevered;

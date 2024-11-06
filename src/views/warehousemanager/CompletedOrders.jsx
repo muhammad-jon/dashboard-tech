@@ -30,13 +30,13 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
-import fetchPurchaseOrders from 'features/yetkaziberuvchi/ordersThunk';
+import warehouseDeleveryOrders from 'features/warehousemanager/deleveryOrdersThunk';
+import { setOrder } from 'features/warehousemanager/ordersSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const PurchaseOrders = () => {
+const CompletedOrders = () => {
   const [page, setPage] = useState(0);
   const [cardName, setCardName] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -44,15 +44,21 @@ const PurchaseOrders = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const purchaseOrders = useSelector((state) => state.purchaseOrders);
-  let isLoading = purchaseOrders.loading;
+  const completedOrders = useSelector((state) => state.warehouseOrders);
+  let isLoading = completedOrders.loading;
 
-  console.log(purchaseOrders);
+  console.log(completedOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      fetchPurchaseOrders({ page, cardName, startDate, endDate, status: 1 }),
+      warehouseDeleveryOrders({
+        page,
+        cardName,
+        startDate,
+        endDate,
+        status: 2,
+      }),
     );
   }, [page, cardName, startDate, endDate]);
 
@@ -60,12 +66,12 @@ const PurchaseOrders = () => {
 
   function openDoc(docInfo) {
     dispatch(setOrder(docInfo));
-    return navigate('neworderdoc');
+    return navigate('doc');
   }
 
   return (
     <div>
-      <Heading>New orders</Heading>
+      <Heading>Completed Orders</Heading>
       <Box display={'flex'} gap={2} my={5}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -140,8 +146,8 @@ const PurchaseOrders = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {purchaseOrders.data &&
-                purchaseOrders.data.map((order, index) => (
+              {completedOrders.data &&
+                completedOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}
@@ -168,4 +174,4 @@ const PurchaseOrders = () => {
   );
 };
 
-export default PurchaseOrders;
+export default CompletedOrders;
