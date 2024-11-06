@@ -31,8 +31,8 @@ function SignIn() {
   const { isLoading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
-    login: 'supllier',
-    password: '1q2w3e4r',
+    login: '',
+    password: '',
     deviceId: 'string',
     token: 'string',
     language: 'uz',
