@@ -28,7 +28,7 @@ import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     login: '',
@@ -69,7 +69,7 @@ function SignIn() {
         return navigate('/');
       } else {
         toast({
-          title: 'Yarol yoki login xato',
+          title: error.message,
           status: 'error',
           duration: 2000,
           isClosable: true,
