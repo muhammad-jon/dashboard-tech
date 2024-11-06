@@ -15,8 +15,8 @@ import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
 
-import PurchaseOrdersDoc from 'views/warehousemanager/PurchaseOrdersDoc';
-import OrderDoc from 'views/warehousemanager/OrderDoc';
+import CheckingDoc from 'views/mainlaborant/CheckingDoc';
+import DeleveredDoc from 'views/mainlaborant/DeleverdDoc';
 
 // Custom Chakra theme
 export default function BoshliqLaborantLayout(props) {
@@ -29,7 +29,7 @@ export default function BoshliqLaborantLayout(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== '/boshliqlaborant/full-screen-maps';
+    return window.location.pathname !== '/mainlaborant/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
     let activeRoute = 'Default Brand Text';
@@ -102,7 +102,7 @@ export default function BoshliqLaborantLayout(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((route, key) => {
-      if (route.layout === '/boshliqlaborant') {
+      if (route.layout === '/mainlaborant') {
         return (
           <Route path={`${route.path}`} element={route.component} key={key} />
         );
@@ -171,14 +171,17 @@ export default function BoshliqLaborantLayout(props) {
                   <Routes>
                     {getRoutes(routes)}
 
-                    <Route path="passed/doc" element={<PurchaseOrdersDoc />} />
-                    <Route path="packed/doc" element={<OrderDoc />} />
-                    <Route path="ended/doc" element={<OrderDoc />} />
+                    <Route path="delevered/doc" element={<DeleveredDoc />} />
+
+                    <Route
+                      path="checking/doc/:status"
+                      element={<CheckingDoc />}
+                    />
 
                     <Route
                       path="/"
                       element={
-                        <Navigate to="/boshliqlaborant/passed" replace />
+                        <Navigate to="/mainlaborant/delevered" replace />
                       }
                     />
                   </Routes>

@@ -31,8 +31,8 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/laborant/ordersSlice';
-import getLaborantOrders from 'features/laborant/laborantOrdersThunk';
+import { setOrder } from 'features/mainlaborant/ordersSlice';
+import getMainLaborantOrders from 'features/mainlaborant/mainLaborantOrdersThunk';
 import React, { useEffect, useState } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,14 +47,16 @@ const Checking = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const laborantOrders = useSelector((state) => state.laborantOrders);
-  let isLoading = laborantOrders.loading;
+  const mainLaborantOrders = useSelector((state) => state.mainLaborantOrders);
+  let isLoading = mainLaborantOrders.loading;
 
-  console.log(laborantOrders);
+  console.log(mainLaborantOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getLaborantOrders({ page, cardName, startDate, endDate, status }));
+    dispatch(
+      getMainLaborantOrders({ page, cardName, startDate, endDate, status }),
+    );
   }, [page, cardName, startDate, endDate, status]);
 
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const Checking = () => {
           placeholder="Select purchase status"
         >
           <option value={3}>V protsesse</option>
-          <option value={7}>Preproverka</option>
+          <option value={4}>Preproverka</option>
           <option value={5}>Ne proshel proverku</option>
           <option value={6}>Proshel proverku</option>
         </Select>
@@ -160,8 +162,8 @@ const Checking = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {laborantOrders.data &&
-                laborantOrders.data.map((order, index) => (
+              {mainLaborantOrders.data &&
+                mainLaborantOrders.data.map((order, index) => (
                   <Tr
                     key={index}
                     cursor={'pointer'}

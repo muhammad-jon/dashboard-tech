@@ -52,6 +52,7 @@ const DeleveredDoc = () => {
     <div>
       <Heading>laborant delevered docs</Heading>
       <Box
+        flexWrap={'wrap'}
         display={'flex'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}
         gap={2}

@@ -57,17 +57,26 @@ function SignIn() {
       });
       return;
     }
-    const response = await dispatch(login(loginData)).unwrap();
-    if (response.code === 200) {
-      toast({
-        title: 'Success',
-        description: 'Hello !!! ',
-        status: 'success',
-        duration: 1000,
-        isClosable: true,
-      });
-      return navigate('/');
-    }
+    await dispatch(login(loginData)).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        toast({
+          title: 'Success',
+          description: 'Hello !!! ',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        return navigate('/');
+      } else {
+        toast({
+          title: 'Yarol yoki login xato',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+        return navigate('/auth');
+      }
+    });
   };
 
   // Chakra color mode

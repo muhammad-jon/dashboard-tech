@@ -48,24 +48,28 @@ import FinanceVerified from 'views/finances/Verified';
 import FinanceShipped from 'views/finances/Shipped';
 
 // taminot imports
+import Items from 'views/taminot/Items';
+import Orders from 'views/taminot/Orders';
+import DeleveredTaminot from 'views/taminot/Delevered';
+import InCheckingTaminot from 'views/taminot/InChecking';
 
 //warehousemanager imports
 import WarehouseManagerPurchaseOrders from 'views/warehousemanager/PurchaseOrders';
+import DeleveryOrders from 'views/warehousemanager/DeleveryOrders';
+import CompletedOrders from 'views/warehousemanager/CompletedOrders';
 
 // laborant imports
 import LaborantDelevered from 'views/laborant/Delevered';
+import Checking from 'views/laborant/Checking';
+
+// laborant imports
+import MainLaborantDelevered from 'views/mainlaborant/Delevered';
+import MainLaborantChecking from 'views/mainlaborant/Checking';
 
 // React Imports
 import { IoCheckbox, IoList } from 'react-icons/io5';
 import { RiBox1Fill } from 'react-icons/ri';
 import { CheckIcon } from '@chakra-ui/icons';
-import Items from 'views/taminot/Items';
-import Orders from 'views/taminot/Orders';
-import DeleveredTaminot from 'views/taminot/Delevered';
-import InCheckingTaminot from 'views/taminot/InChecking';
-import DeleveryOrders from 'views/warehousemanager/DeleveryOrders';
-import CompletedOrders from 'views/warehousemanager/CompletedOrders';
-import Checking from 'views/laborant/Checking';
 
 const routesConfig = {
   ADMIN: [
@@ -405,7 +409,30 @@ const routesConfig = {
       ],
     },
   ],
-  BOSHLIQ_LABORANT: [],
+  BOSHLIQ_LABORANT: [
+    {
+      category: 'Zakupka',
+      name: 'Zakupka',
+      items: [
+        {
+          name: 'Delevered',
+          layout: '/mainlaborant',
+          path: '/delevered',
+          icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+          component: <MainLaborantDelevered />,
+        },
+        {
+          name: 'Checking',
+          layout: '/mainlaborant',
+          path: '/checking',
+          icon: (
+            <Icon as={MdFireTruck} width="20px" height="20px" color="inherit" />
+          ),
+          component: <MainLaborantChecking />,
+        },
+      ],
+    },
+  ],
   GOST: [],
 };
 

@@ -180,7 +180,7 @@ export default function LaborantLayout(props) {
 
                     <Route
                       path="/"
-                      element={<Navigate to="/laborant/passed" replace />}
+                      element={<Navigate to="/laborant/delevered" replace />}
                     />
                   </Routes>
                 </Box>

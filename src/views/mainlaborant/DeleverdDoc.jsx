@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Heading,
   Input,
   Table,
@@ -10,49 +9,24 @@ import {
   Th,
   Thead,
   Tr,
-  useToast,
 } from '@chakra-ui/react';
 
 import { formatDate } from 'config';
-import startRewiew from 'features/laborant/startFinishThunk';
 
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const DeleveredDoc = () => {
-  const laborantOrders = useSelector((state) => state.laborantOrders);
-  const { order, loading, error } = laborantOrders;
+  const mainLaborantOrders = useSelector((state) => state.mainLaborantOrders);
+  const { order } = mainLaborantOrders;
   console.log(order);
-
-  const dispatch = useDispatch();
-  const toast = useToast();
-
-  function onHandleStart() {
-    console.log('start');
-    dispatch(
-      startRewiew({ docEntry: order.docEntry, docNum: order.docNum, type: 1 }),
-    ).then((el) => {
-      if (el.meta.requestStatus === 'fulfilled') {
-        toast({
-          title: "Ma'lumotlar muvaffaqiyatli o'zgardi.",
-          status: 'success',
-        });
-      }
-
-      if (el.meta.requestStatus === 'rejected') {
-        toast({
-          title: "Ma'lumotlar o'zgartirish imkoni bo'lmadi: " + error,
-          status: 'error',
-        });
-      }
-    });
-  }
 
   return (
     <div>
       <Heading>laborant delevered docs</Heading>
       <Box
         display={'flex'}
+        flexWrap={'wrap'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}
         gap={2}
         my={5}
@@ -118,11 +92,6 @@ const DeleveredDoc = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Box mt={4}>
-        <Button onClick={onHandleStart} isLoading={loading} colorScheme="green">
-          Start
-        </Button>
-      </Box>
     </div>
   );
 };

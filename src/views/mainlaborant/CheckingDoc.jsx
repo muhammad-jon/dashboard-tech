@@ -14,18 +14,17 @@ import {
 } from '@chakra-ui/react';
 
 import { formatDate } from 'config';
-import startFinish from 'features/laborant/startFinishThunk';
+import acceptReject from 'features/mainlaborant/acceptRejectThunk';
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CheckingDoc = () => {
-  const laborantOrders = useSelector((state) => state.laborantOrders);
-  const { order, loading, error } = laborantOrders;
+  const mainLaborantOrders = useSelector((state) => state.mainLaborantOrders);
+  const { order, loading, error } = mainLaborantOrders;
   const params = useParams();
-
-  console.log(order);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -33,13 +32,14 @@ const CheckingDoc = () => {
   function onHandleStartFinish(type) {
     console.log('start');
     dispatch(
-      startFinish({ docEntry: order.docEntry, docNum: order.docNum, type }),
+      acceptReject({ docEntry: order.docEntry, docNum: order.docNum, type }),
     ).then((el) => {
       if (el.meta.requestStatus === 'fulfilled') {
         toast({
           title: "Ma'lumotlar muvaffaqiyatli o'zgardi.",
           status: 'success',
         });
+        navigate(-1);
       }
 
       if (el.meta.requestStatus === 'rejected') {
@@ -55,6 +55,7 @@ const CheckingDoc = () => {
     <div>
       <Heading>laborant checking docs</Heading>
       <Box
+        flexWrap={'wrap'}
         display={'flex'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}
         gap={2}
@@ -122,31 +123,30 @@ const CheckingDoc = () => {
         </Table>
       </TableContainer>
       <Box mt={4}>
-        {params.status === '3' && (
-          <Button
-            onClick={() => onHandleStartFinish(2)}
-            isLoading={loading}
-            colorScheme="green"
-          >
-            Start
-          </Button>
-        )}
-        {params.status === '7' && (
+        {params.status === '4' && (
           <>
             <Button
               me={5}
-              onClick={() => onHandleStartFinish(3)}
+              onClick={() => onHandleStartFinish(1)}
               isLoading={loading}
               colorScheme="green"
             >
-              Start
+              Verified
             </Button>
             <Button
-              onClick={() => onHandleStartFinish(4)}
+              me={5}
+              onClick={() => onHandleStartFinish(2)}
               isLoading={loading}
               colorScheme="red"
             >
-              Finish
+              Rejected
+            </Button>
+            <Button
+              onClick={() => onHandleStartFinish(3)}
+              isLoading={loading}
+              colorScheme="orange"
+            >
+              Recheck
             </Button>
           </>
         )}

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_URL } from 'config';
 
-const startFinishThunk = createAsyncThunk(
+const acceptRejectThunk = createAsyncThunk(
   'addItemToTaminot',
   async (arg, { rejectWithValue, getState }) => {
     const token = getState().auth.token;
@@ -10,18 +10,14 @@ const startFinishThunk = createAsyncThunk(
     let url = BASE_URL;
     switch (arg.type) {
       case 1:
-        url += `laboratorian-purchase-orders/to-first-under-review-process/${arg.docEntry}/docnum/${arg.docNum}`;
+        url += `main-laboratorian-purchase-orders/set-status-to-verified/${arg.docEntry}/by-docnum/${arg.docNum}`;
         break;
       case 2:
-        url += `laboratorian-purchase-orders/to-chief-under-review-process/${arg.docEntry}/docnum/${arg.docNum}`;
+        url += `main-laboratorian-purchase-orders/set-status-rejected/${arg.docEntry}/by-docnum/${arg.docNum}`;
         break;
       case 3:
-        url += `laboratorian-purchase-orders/started-re-checking-process/docentry/${arg.docEntry}`;
+        url += `main-laboratorian-purchase-orders/set-status-re-checking/${arg.docEntry}/by-docnum/${arg.docNum}`;
         break;
-      case 4:
-        url += `laboratorian-purchase-orders/from-retest-to-chief-under-review-process/${arg.docEntry}/docnum/${arg.docNum}`;
-        break;
-
       default:
         break;
     }
@@ -44,4 +40,4 @@ const startFinishThunk = createAsyncThunk(
   },
 );
 
-export default startFinishThunk;
+export default acceptRejectThunk;

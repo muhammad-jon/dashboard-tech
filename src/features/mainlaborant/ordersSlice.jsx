@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import getMainLaborantOrders from './mainLaborantOrdersThunk';
-import startRewiew from './startFinishThunk';
+import acceptReject from './acceptRejectThunk';
 
 const ordersSlice = createSlice({
   name: 'mainlaborant/orders',
@@ -29,14 +29,14 @@ const ordersSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(startRewiew.pending, (state) => {
+      .addCase(acceptReject.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(startRewiew.fulfilled, (state, action) => {
+      .addCase(acceptReject.fulfilled, (state, action) => {
         state.loading = false;
       })
-      .addCase(startRewiew.rejected, (state, action) => {
+      .addCase(acceptReject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

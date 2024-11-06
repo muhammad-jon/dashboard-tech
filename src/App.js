@@ -36,7 +36,7 @@ export default function Main() {
       case 'LABORANT':
         return 'laborant';
       case 'BOSHLIQ_LABORANT':
-        return 'boshliqlaborant';
+        return 'mainlaborant';
       default:
         return 'auth';
     }
@@ -139,7 +139,7 @@ export default function Main() {
       case 'BOSHLIQ_LABORANT':
         return (
           <Route
-            path="boshliqlaborant/*"
+            path="mainlaborant/*"
             element={
               token ? (
                 <BoshliqLaborantLayout
