@@ -342,14 +342,14 @@ const routesConfig = {
               color="inherit"
             />
           ),
-          component: <FinanceNewOrders />,
+          component: <DeleveredTaminot />,
         },
         {
           name: 'Tugallanganlar',
           layout: '/taminot',
           path: '/ended',
           icon: <Icon as={MdDone} width="20px" height="20px" color="inherit" />,
-          component: <FinanceNewOrders />,
+          component: <DeleveredTaminot />,
         },
       ],
     },

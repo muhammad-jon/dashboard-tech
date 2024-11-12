@@ -10,17 +10,45 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 
 import { formatDate } from 'config';
+import addCarNumberThunk from 'features/yetkaziberuvchi/addCarNumberThunk';
 
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const NewOrderDoc = () => {
   const purchaseOrders = useSelector((state) => state.purchaseOrders);
-  const { order } = purchaseOrders;
+  const { order, loading } = purchaseOrders;
   console.log(order);
+  const dispatch = useDispatch();
+  const [number, setNumber] = useState();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  function onHandleAddCarNumber() {
+    dispatch(
+      addCarNumberThunk({ docEntry: order.docEntry, number: number }),
+    ).then((el) => {
+      if (el.meta.requestStatus === 'fulfilled') {
+        toast({
+          title: 'Sucessfull',
+          status: 'success',
+        });
+        navigate(-1);
+      }
+
+      if (el.meta.requestStatus === 'rejected') {
+        toast({
+          title: "Ma'lumotlar qo'shishni imkoni bo'lmadi ",
+          status: 'error',
+        });
+      }
+    });
+  }
 
   return (
     <div>
@@ -76,10 +104,19 @@ const NewOrderDoc = () => {
         </Table>
       </TableContainer>
       <Box mt={4}>
-        <Button me="4" colorScheme="green">
-          Any action
+        <Input
+          onChange={(e) => setNumber(e.target.value)}
+          required
+          placeholder="car number"
+          mb={'5'}
+        />
+        <Button
+          isLoading={loading}
+          onClick={onHandleAddCarNumber}
+          colorScheme="green"
+        >
+          Add car number
         </Button>
-        <Button colorScheme="green">Any action</Button>
       </Box>
     </div>
   );

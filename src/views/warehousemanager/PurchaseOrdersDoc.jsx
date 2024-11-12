@@ -10,6 +10,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 
 import { formatDate } from 'config';
@@ -17,13 +18,16 @@ import packOrderWarehouse from 'features/warehousemanager/packOrderThunk';
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const PurchaseOrdersDoc = () => {
   const purchaseOrders = useSelector((state) => state.warehouseOrders);
-  const { order } = purchaseOrders;
+  const { order, loading } = purchaseOrders;
   console.log(order);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toast = useToast();
 
   function packOrder() {
     dispatch(
@@ -44,7 +48,22 @@ const PurchaseOrdersDoc = () => {
           ],
         },
       }),
-    );
+    ).then((el) => {
+      if (el.meta.requestStatus === 'fulfilled') {
+        toast({
+          title: 'Muvoffaqiyatli',
+          status: 'success',
+        });
+        navigate(-1);
+      }
+
+      if (el.meta.requestStatus === 'rejected') {
+        toast({
+          title: 'Xatolik ',
+          status: 'error',
+        });
+      }
+    });
   }
 
   return (
@@ -101,7 +120,7 @@ const PurchaseOrdersDoc = () => {
         </Table>
       </TableContainer>
       <Box mt={4}>
-        <Button onClick={packOrder} colorScheme="green">
+        <Button isLoading={loading} onClick={packOrder} colorScheme="green">
           Otgruzit
         </Button>
       </Box>

@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
+import { setOrder } from 'features/taminot/itemsSlice';
 import fetchPurchaseOrders from 'features/yetkaziberuvchi/ordersThunk';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

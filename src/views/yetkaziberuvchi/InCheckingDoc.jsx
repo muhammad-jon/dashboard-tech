@@ -4,13 +4,13 @@ import {
   Heading,
   Input,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 
 import { formatDate } from 'config';
@@ -18,14 +18,14 @@ import { formatDate } from 'config';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const DeleveredDoc = () => {
+const InCheckingDoc = () => {
   const purchaseOrders = useSelector((state) => state.purchaseOrders);
   const { order } = purchaseOrders;
   console.log(order);
 
   return (
     <div>
-      <Heading>Delevered order docs</Heading>
+      <Heading>order docs</Heading>
       <Box
         display={'flex'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}
@@ -76,8 +76,9 @@ const DeleveredDoc = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      <Box mt={4}></Box>
     </div>
   );
 };
 
-export default DeleveredDoc;
+export default InCheckingDoc;

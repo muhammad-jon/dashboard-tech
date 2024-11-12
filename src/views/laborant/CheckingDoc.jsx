@@ -18,7 +18,7 @@ import startFinish from 'features/laborant/startFinishThunk';
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CheckingDoc = () => {
   const laborantOrders = useSelector((state) => state.laborantOrders);
@@ -29,6 +29,7 @@ const CheckingDoc = () => {
 
   const dispatch = useDispatch();
   const toast = useToast();
+  const navigate = useNavigate();
 
   function onHandleStartFinish(type) {
     console.log('start');
@@ -40,6 +41,7 @@ const CheckingDoc = () => {
           title: "Ma'lumotlar muvaffaqiyatli o'zgardi.",
           status: 'success',
         });
+        navigate(-1);
       }
 
       if (el.meta.requestStatus === 'rejected') {
@@ -128,7 +130,7 @@ const CheckingDoc = () => {
             isLoading={loading}
             colorScheme="green"
           >
-            Start
+            End
           </Button>
         )}
         {params.status === '7' && (

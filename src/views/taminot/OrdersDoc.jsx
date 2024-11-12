@@ -18,6 +18,7 @@ import markAsDelevered from 'features/taminot/markAsDeleveredThunk';
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const OrdersDoc = () => {
   const purchaseOrders = useSelector((state) => state.purchaseOrders);
@@ -28,6 +29,7 @@ const OrdersDoc = () => {
 
   const dispatch = useDispatch();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const onHandleSend = () => {
     dispatch(
@@ -37,6 +39,12 @@ const OrdersDoc = () => {
         toast({
           title: "Ma'lumotlar muvaffaqiyatli o'zgardi.",
           status: 'success',
+        });
+        navigate(-1);
+      } else {
+        toast({
+          title: 'Error',
+          status: 'error',
         });
       }
     });

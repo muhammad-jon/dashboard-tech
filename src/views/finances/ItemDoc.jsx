@@ -24,7 +24,7 @@ const ItemDoc = () => {
 
   return (
     <div>
-      <Heading>Invoice item docs</Heading>
+      <Heading>item docs</Heading>
       <Box
         display={'flex'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}
@@ -75,12 +75,6 @@ const ItemDoc = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Box mt={4}>
-        <Button me="4" colorScheme="green">
-          Any action
-        </Button>
-        <Button colorScheme="green">Any action</Button>
-      </Box>
     </div>
   );
 };

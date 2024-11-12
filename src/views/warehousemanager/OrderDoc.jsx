@@ -75,12 +75,6 @@ const OrderDoc = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Box mt={4}>
-        <Button me="4" colorScheme="green">
-          Any action
-        </Button>
-        <Button colorScheme="green">Any action</Button>
-      </Box>
     </div>
   );
 };

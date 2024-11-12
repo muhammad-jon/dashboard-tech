@@ -19,7 +19,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const DeleveredDoc = () => {
-  const purchaseOrders = useSelector((state) => state.purchaseOrders);
+  const purchaseOrders = useSelector((state) => state.taminotItems);
   const { order } = purchaseOrders;
   console.log(order);
 
@@ -53,7 +53,6 @@ const DeleveredDoc = () => {
         />
       </Box>
 
-      
       <TableContainer>
         <Table variant="striped" colorScheme="green">
           <Thead>
@@ -77,12 +76,6 @@ const DeleveredDoc = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Box mt={4}>
-        <Button me="4" colorScheme="green">
-          Any action
-        </Button>
-        <Button colorScheme="green">Any action</Button>
-      </Box>
     </div>
   );
 };

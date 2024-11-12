@@ -16,6 +16,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
 // import routes from 'routes.js';
 import DeleveredDoc from 'views/yetkaziberuvchi/DeleveredDoc';
+import InCheckingDoc from 'views/yetkaziberuvchi/InCheckingDoc';
 import NewOrderDoc from 'views/yetkaziberuvchi/NewOrderDoc';
 import PaymentDoc from 'views/yetkaziberuvchi/PaymentDoc';
 
@@ -182,7 +183,7 @@ export default function YetkaziBeruvchiLayout(props) {
                     <Route path="payment/paymentdoc" element={<PaymentDoc />} />
                     <Route
                       path="checking/inchekingdoc"
-                      element={<NewOrderDoc />}
+                      element={<InCheckingDoc />}
                     />
                     <Route
                       path="completed/completeddoc"

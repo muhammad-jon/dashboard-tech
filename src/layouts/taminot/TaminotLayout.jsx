@@ -178,7 +178,8 @@ export default function TaminotLayout(props) {
                     <Route path="items/doc" element={<ItemsDoc />} />
                     <Route path="orders/doc" element={<OrdersDoc />} />
                     <Route path="orders/new" element={<AddNewOrder />} />
-                    <Route path="delvered/doc" element={<DeleveredDoc />} />
+                    <Route path="delevered/doc" element={<DeleveredDoc />} />
+                    <Route path="got/doc" element={<DeleveredDoc />} />
                     <Route path="checking/doc" element={<NewOrderDoc />} />
 
                     <Route

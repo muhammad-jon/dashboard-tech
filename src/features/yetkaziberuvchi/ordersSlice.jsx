@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchPurchaseOrders from './ordersThunk';
+import addCarNumberThunk from './addCarNumberThunk';
 
 const ordersSlice = createSlice({
   name: 'orders',
@@ -25,6 +26,17 @@ const ordersSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchPurchaseOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addCarNumberThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCarNumberThunk.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addCarNumberThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

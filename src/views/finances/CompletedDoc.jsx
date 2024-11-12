@@ -21,25 +21,42 @@ import payForPurchase from 'features/finance/payForPurchaseThunk';
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const CompletedDoc = () => {
   const [summa, setSumma] = useState('');
   const financeOrders = useSelector((state) => state.financeOrders);
   const { order, loading, error } = financeOrders;
   console.log(order);
+  const navigate = useNavigate();
 
   const toast = useToast();
   const dispatch = useDispatch();
 
   function onHandlePayForCard(arg) {
     if (summa > 0) {
-      dispatch(payForPurchase(arg));
+      dispatch(payForPurchase(arg)).then((el) => {
+        if (el.meta.requestStatus === 'fulfilled') {
+          toast({
+            title: 'Success',
+            status: 'success',
+          });
+          navigate(-1);
+        }
+
+        if (el.meta.requestStatus === 'rejected') {
+          toast({
+            title: 'Error ',
+            status: 'error',
+          });
+        }
+      });
     } else toast({ title: 'enter valid value', type: 'error' });
   }
 
   return (
     <div>
-      <Heading>Invoice item docs</Heading>
+      <Heading>Completed item docs</Heading>
       <Box
         display={'flex'}
         flexDirection={{ lg: 'row', md: 'column', base: 'column' }}

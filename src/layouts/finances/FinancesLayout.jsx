@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
-import ItemDoc from 'views/ceo/ItemDoc';
+import ItemDoc from 'views/finances/ItemDoc';
 import CompletedDoc from 'views/finances/CompletedDoc';
 
 // Custom Chakra theme
@@ -175,7 +175,7 @@ export default function FinancesLayout(props) {
                       path="delevered/delevereddoc"
                       element={<ItemDoc />}
                     />
-                    <Route path="checking/chekingdoc" element={<ItemDoc />} />
+                    <Route path="checking/checkingdoc" element={<ItemDoc />} />
                     <Route
                       path="completed/completeddoc"
                       element={<CompletedDoc />}

@@ -18,6 +18,7 @@ import startRewiew from 'features/laborant/startFinishThunk';
 
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const DeleveredDoc = () => {
   const laborantOrders = useSelector((state) => state.laborantOrders);
@@ -26,6 +27,7 @@ const DeleveredDoc = () => {
 
   const dispatch = useDispatch();
   const toast = useToast();
+  const navigate = useNavigate();
 
   function onHandleStart() {
     console.log('start');
@@ -37,6 +39,7 @@ const DeleveredDoc = () => {
           title: "Ma'lumotlar muvaffaqiyatli o'zgardi.",
           status: 'success',
         });
+        navigate(-1);
       }
 
       if (el.meta.requestStatus === 'rejected') {

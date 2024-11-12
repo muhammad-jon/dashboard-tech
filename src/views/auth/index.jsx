@@ -69,7 +69,7 @@ function SignIn() {
         return navigate('/');
       } else {
         toast({
-          title: error.message,
+          title: res?.payload?.message,
           status: 'error',
           duration: 2000,
           isClosable: true,
