@@ -18,7 +18,7 @@ import {
 import Loading from 'components/loading/Loading';
 import { formatDate } from 'config';
 import fetchFinanceOrders from 'features/finance/ordersThunk';
-import { setOrder } from 'features/yetkaziberuvchi/ordersSlice';
+import { setOrder } from 'features/finance/ordersSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

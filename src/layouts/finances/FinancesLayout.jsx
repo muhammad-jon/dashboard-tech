@@ -16,6 +16,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import routesConfig from 'routes';
 import ItemDoc from 'views/finances/ItemDoc';
 import CompletedDoc from 'views/finances/CompletedDoc';
+import ShippedDoc from 'views/finances/ShippedDoc';
 
 // Custom Chakra theme
 export default function FinancesLayout(props) {
@@ -181,7 +182,7 @@ export default function FinancesLayout(props) {
                       element={<CompletedDoc />}
                     />
                     <Route path="verified/verifieddoc" element={<ItemDoc />} />
-                    <Route path="shipped/shippeddoc" element={<ItemDoc />} />
+                    <Route path="shipped/shippeddoc" element={<ShippedDoc />} />
 
                     <Route
                       path="/"
